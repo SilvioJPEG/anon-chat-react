@@ -1,0 +1,91 @@
+.overlay {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 3;
+    .popup {
+        color: var(--textColor);
+        position: relative;
+        margin: 0px auto 140px;
+        width: 350px;
+        height: 150px;
+        background-color: var(--inputFieldColor);
+        border-radius: 5px;
+        .closeButton {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .newChannelInfo {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            margin: 0 20px 0 20px;
+            height: 100%;
+            .channelPhoto {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                img {
+                    width: inherit;
+                    height: inherit;
+                    border-radius: inherit;
+                }
+            }
+            .popupForm {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .channelNameField
+                {
+                    margin-bottom: 10px;
+                    input {
+                        color:inherit;
+                        background-color: var(--wrapperColor);
+                        padding: 10px;
+                        border: 1px solid var(--borderColor);
+                        position: sticky;
+                        border-radius: 4px;
+                        top: 0;
+                        right: 0;
+                        &:hover {
+                            border: 1px solid var(--saturatedBorderColor);
+                        }
+                        &:focus {
+                            padding: 9px;
+                            border: 2px solid rgba(176, 196, 222, 0.671);
+                        }
+                    }
+                }
+                button {
+                    color:inherit;
+                    width: 100%;
+                    background-color: var(--wrapperColor);
+                    border: 1px solid var(--borderColor);
+                    padding: 10px;
+                    border-radius: 4px;
+                    transition: all 0.05s ease-in-out;
+                    &:hover {
+                        cursor: pointer;
+                        border: 1px solid var(--saturatedBorderColor);
+                    }
+                    &:active {
+                        padding: 10px;
+                        transform: translateY(2px);
+                    }
+                }
+            }
+        }
+
+    }
+}

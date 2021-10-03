@@ -1,0 +1,33 @@
+.messageBody {
+    margin: 10px 40px;
+    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    &:hover .reply {
+        display: block;
+        cursor: pointer;
+    }
+    .reply {
+        display: none;
+        position: absolute;
+        right: 70px;
+    }
+    .info{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 200px;
+        .messagerName {
+            font-weight: 900;
+        }
+        .dateInfo {
+            right: 0;
+            margin-left: 20px;
+            font-weight: 300;
+        }
+    }
+    p {
+        font-weight: 400;
+        margin: 0;
+    }
+}

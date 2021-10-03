@@ -1,0 +1,46 @@
+$border-vk: #EDEEF0;
+
+.channel {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 100%;
+    height: 70px;
+    .channelPhoto {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        padding-right: 10px;
+        img {
+            width: inherit;
+            height: inherit;
+            border-radius: inherit;
+        }
+    }
+    .channelDescription {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 0 10px;
+        overflow: hidden;
+        width: inherit;
+        .dateWrapper {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            color: darkgray;
+        }
+        .channelName {
+            padding-bottom: 5px;
+            font-weight: 700;
+        }
+        .preview {
+            font-size: small;
+            font-weight: 300;
+        }
+    }
+    &:hover {
+        cursor: pointer;
+        background-color: var(--inputFieldColor);
+    }
+}
