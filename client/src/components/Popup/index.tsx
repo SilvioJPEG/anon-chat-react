@@ -21,8 +21,10 @@ const Popup: React.FC<popupProps> = ({PopupVisible, onClose, channels, setChanne
             channelName = textInput.current.value;
         }
         if (channelName === "" || !channelName.replace(/\s/g, '').length) { //checks if channelName is empty or contains only spaces
-            alert("Поле 'имя канала' должно быть заполнено")
-            return;
+            return alert("Поле 'имя канала' должно быть заполнено");
+        }
+        if (channels.length >= 5) {
+            return  alert("Одновременно не может существовать больше 5 каналов. Присоединитесь к существующему или подождите пока один из них не будет удален.");
         }
         const randomPicNumber = Math.floor(Math.random() * 3) + 1;
         const channel = {"author": "admin",

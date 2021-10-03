@@ -4,9 +4,15 @@ import Channel from "../components/Channel";
 import Message from "../components/Message";
 import Popup from "../components/Popup";
 import {ChannelType, MessageType} from "../types"
+import { io } from "socket.io-client";
+const socket = io();
+
+socket.on("connect", () => {
+    console.log(socket.id); 
+  });
 
 
-function Chat() {
+const Chat: React.FC = () => {
     const [PopupVisible, SetPopupVisible] = React.useState<boolean>(false); //makes popup visible by clicking on "add new channel"
     const [channels, setChannels] = React.useState<ChannelType[]>([]); //list of channels that shows in side bar
     const [searchValue, setSearchValue] = React.useState<string>(''); //Handles search values for channel list
@@ -18,7 +24,7 @@ function Chat() {
         axios.get('/channels').then((res) => {
             setChannels(res.data);
         });
-    }, [])
+    }, []);
 
     const onChangeSearchInput = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setSearchValue(event.target.value);
@@ -35,12 +41,6 @@ function Chat() {
         }
     }, [messages])
 
-    const GetNewMessages = () => {
-        axios.get(`/messages/${currentChannel[0]}`).then((res) => {
-            setMessages(res.data);
-        });
-    }
-
     const SendMessage = () => {
         if (!usernameValue.replace(/\s/g, '').length) {
             alert('введите имя пользователя');
@@ -51,18 +51,22 @@ function Chat() {
         if (inputField) {
             msgText =  inputField.innerHTML;
             if (msgText.replace(/\s/g, '').length) {
-                const new_msg = {"chat_id": currentChannel[0], "author": usernameValue, "text": msgText};
+                const new_msg = {"chat_id": currentChannel[0], "author": usernameValue, "text": msgText, "date": Date.now()};
                 try {
-                    axios.post("/messages", new_msg).then(() => {
-                        GetNewMessages();
-                    });
+                    axios.post("/messages", new_msg);
                     inputField.innerHTML='';
+                    socket.emit('chatMessage', new_msg, currentChannel[0]);
                 } catch (error) {
                     alert('не удалось отправить сообщение')
                 }
             }
         }
     }
+    socket.on('message', (msg, channel) => {
+        if (currentChannel[0] === channel) {
+            setMessages([...messages, msg]);
+        }
+    });
 
     return(
     <div className="wrapper">
@@ -110,7 +114,6 @@ function Chat() {
             {currentChannel[0] &&
             <div className="chatInputForm">
                 <input className="userNameField" onChange={onChangeUsernameUnput} value={usernameValue} placeholder="Username"/>
-                <div className="updateButton" onClick={GetNewMessages}>get new messages</div>
                 <div className="textField">
                     <div id="inputField" contentEditable={true} suppressContentEditableWarning={true}></div>
                     <button className="msgSendButton" onClick={SendMessage} />

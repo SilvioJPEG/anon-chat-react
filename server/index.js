@@ -1,9 +1,19 @@
-const app = require('./app');
 const mongoose = require('mongoose');
-const config = require('./config')
-const PORT = process.env.PORT || 3001
+const http = require('http');
+const socketio = require('socket.io')
+const config = require('./config');
+const app = require('./app');
+const { Socket } = require('dgram');
 
-const server = require('http').Server(app);
+const PORT = process.env.PORT || 3001
+const server = http.createServer(app);
+const io = socketio(server);
+
+io.on("connection", (socket) => {
+    socket.on('chatMessage', (msg, channel) => {
+        io.emit('message', msg, channel);
+    })
+});
 
 async function start() {
     try {
@@ -17,4 +27,4 @@ async function start() {
     }
 }
 
-start()
+start();

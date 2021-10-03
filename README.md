@@ -6,6 +6,7 @@ Anonymous chat that doesn't require registration.
 ###### Backend:
 * MongoDB
 * NodeJS & Express
+* Socket.io
 ###### Frontend:
 * Typescript
 * React 
