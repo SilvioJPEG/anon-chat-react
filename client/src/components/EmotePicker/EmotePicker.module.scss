@@ -1,0 +1,25 @@
+.emotePicker {
+    position: absolute;
+    bottom: 85px;
+    left: 10px;
+    border: 1px solid var(--borderColor);
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    .emoteItem {
+        display: flex;
+        justify-content: center;
+        padding: 5px;
+        border-radius: inherit;
+        &:hover {
+            cursor: pointer;
+            background-color: var(--saturatedBorderColor);
+        }
+        img {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            height: 30px;
+        }
+    }
+}

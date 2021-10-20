@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const messageSchema = new Schema({
+const MessageSchema = new Schema({
     chat_id: {
         ref: "Channel",
         type: Schema.Types.ObjectId
@@ -17,9 +17,14 @@ const messageSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    attachments: [{
+        type: String
+    }],
+    replyTo_id: {
+        type: String
     }
 });
 
-const Message = mongoose.model('Message', messageSchema);
-
+const Message = mongoose.model('Message', MessageSchema);
 module.exports = Message;

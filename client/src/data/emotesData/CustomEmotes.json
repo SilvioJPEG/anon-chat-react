@@ -1,0 +1,10 @@
+{
+    "emoteList":[
+        {"emoteName": ":1984:", "emoteURI":"1984.png"},
+        {"emoteName":":roflan:", "emoteURI":"roflan.png"},
+        {"emoteName": ":trollge:", "emoteURI":"trollge.png"},
+        {"emoteName": ":mintLike:", "emoteURI":"mintLike.png"},
+        {"emoteName":":dogeComp:", "emoteURI":"dogeComp.png"},
+        {"emoteName":":kappa:", "emoteURI":"kappa.png"}
+    ]
+}

@@ -1,8 +1,11 @@
+$border-radius: 10px; 
+
 * {
     box-sizing: border-box;
     outline: none;
 }
 :root {
+    --accentColor: #009687;
     --backgroundColor: #EDEEF0;
     --wrapperColor: white;
     --inputFieldColor: #FAFBFC;
@@ -27,10 +30,12 @@ body {
         --saturatedBorderColor: #43494d;
     }
 }
+
 a {
     color: inherit;
     text-decoration: none;
 }
+
 ul {
     margin: 0;
     padding: 0;
@@ -39,24 +44,45 @@ ul {
         display: inline;
     }
 }
+
 .wrapper {
     background-color: var(--wrapperColor);    
-    width: 1000px;
-    height: 85vh;
-    margin: 40px auto;
+    width: 70vw;
+    min-width: 1000px;
+    height: calc(100vh - 20px);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px auto;
     display: flex;
     flex-direction: row;
     font-size: 14px;
     font-weight: 400;
-    border-radius: 10px;
+    border-radius: $border-radius;
 }
+
 .sideWrapper {
+    position: relative;
     width: 30%;
+    max-width: 300px;
     height: 100%;
-    border-top-left-radius: inherit;
-    border-bottom-left-radius: inherit;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
     border: 1px solid var(--borderColor);
-    .searchBar {
+    .sideWrapperMenu {
+        display: flex;
+        flex-direction: row;
+        grid-gap: 8px;
+        align-items: center;
+        justify-content: center;
+        .menuButton {
+            display: flex;
+            align-items: center;
+            opacity: 0.6;
+            font-size: 1.3em;
+            &:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
         display: flex;
         position: sticky;
         top: 10px;
@@ -88,35 +114,17 @@ ul {
             display: none;
         }
     }
-    .channelAdder {
-        height: 70px;
-        padding: 10px 30px;
-        background-color: var(--backgroundColor);
-        align-items: center;
-        display: flex;
-        font-weight: 500;
-        svg {
-            padding-right: 5px;
-        }
-        span {
-            padding-left: 10px;
-        }
-        &:hover {
-            background-color: var(--inputFieldColor);
-            cursor: pointer;
-        }
-    }
 }
+
 .chatBody {
-    border-bottom-right-radius: inherit;
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 70%;
-    border-top-right-radius: inherit;
-    border-bottom-right-radius: inherit;
+    width: 100%;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
     .chatHeader {
-        border-top-right-radius: inherit;
+        border-top-right-radius: $border-radius;
         border-bottom: 1px solid var(--borderColor);
         border-top: 1px solid var(--borderColor);
         border-right: 1px solid var(--borderColor);
@@ -138,66 +146,25 @@ ul {
             gap: 30px;
         }
     }
-    #chatHistory {
-        padding: 0 30px;
-        overflow-y: scroll;
-        -ms-overflow-style: none;  
-        scrollbar-width: none;  
-        height: 100%;
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    }
-    .chatInputForm {
-        border-bottom-right-radius: inherit;
-        background-color: var(--inputFieldColor);
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        bottom: 0;
-        border-top: 1px solid var(--borderColor);
+    .chatWrapper {
         border-right: 1px solid var(--borderColor);
-        border-bottom: 1px solid var(--borderColor);
-        border-bottom-right-radius: inherit;
-        padding: 20px;
-        width: 100%;
-        .userNameField {
-            background-color: var(--wrapperColor);
-            color: var(--textColor);
-            border: 1px solid var(--saturatedBorderColor);
-            border-radius: 5px;
-            padding: 5px 15px;
-            margin-left: 21px;
-            margin-bottom: 10px;
-            align-self: flex-start;
-            left:0;
-        }
-        .textField {
-            display: flex;
-            flex-direction: row;
-            #inputField {
-                position: relative;
-                background-color: var(--wrapperColor);
-                padding: 10px 15px;
-                width: 90%;
-                margin: 0 auto;
-                border: 1px solid var(--saturatedBorderColor);
-                border-radius: 5px;
-            }
-            .msgSendButton {
-                border: 0;
-                background: url("assets/send-icon.svg/") center no-repeat;
-                padding: 24px 12px;
-                background-size: 24px 24px;
-                &:hover {
-                    cursor: pointer;
-                }
+        #chatHistory {
+            height: calc(100vh - 180px);
+            padding: 0 30px;
+            overflow-y: scroll;
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+            &::-webkit-scrollbar {
+                display: none;
             }
         }
-
+        #nowTyping {
+            margin: 10px 0 20px 40px;
+            color: gray;
+        }
     }
 }
+
 .footerButton {
     position: absolute;
     z-index: 2;
@@ -210,6 +177,7 @@ ul {
         cursor: pointer;
     }
 }
+
 .goBackButton {
     font-size: xx-large;
     position: absolute;
@@ -218,20 +186,20 @@ ul {
         cursor: pointer;
     }
 }
+
 .info {
     display: flex;
     flex-direction: column;
     align-content: center;
     margin: 60px 80px;
 }
-.updateButton {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-top: 25px;
-    margin-right: 70px;
-    &:hover {
-        cursor: pointer;
-        text-decoration: underline;
+
+.noChatPlaceholder {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    p {
+        margin: 0;
+        font-size: large;
     }
 }

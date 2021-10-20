@@ -1,30 +1,20 @@
-const mongoose = require('mongoose');
+require('dotenv').config();
+const express = require('express');
 const http = require('http');
-const socketio = require('socket.io')
-const config = require('./config');
-const app = require('./app');
-const { Socket } = require('dgram');
+const path = require("path");
 
-const PORT = process.env.PORT || 3001
+const chatRoutes = require('./core/routes');
+const createSocket = require('./core/socket');
+require('./core/db');
+
+app = express();
+app.use(express.json());
+app.use('/public', express.static(path.resolve(__dirname, './public')));
+app.use(chatRoutes);
+const PORT = process.env.PORT || 3000
 const server = http.createServer(app);
-const io = socketio(server);
+const io = createSocket(server);
 
-io.on("connection", (socket) => {
-    socket.on('chatMessage', (msg, channel) => {
-        io.emit('message', msg, channel);
-    })
+server.listen(PORT, function() {
+    console.log(`App listening at http://localhost:${PORT}`)
 });
-
-async function start() {
-    try {
-        await mongoose.connect(config.mongoURI).then(() => {console.log('Mongodb connected.')})
-
-        server.listen(PORT, (err) => {
-            console.log(`Example app listening at http://localhost:${PORT}`)
-        })
-    } catch(err) {
-        console.log(err)
-    }
-}
-
-start();

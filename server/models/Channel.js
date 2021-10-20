@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const channelSchema = new Schema({
+const ChannelSchema = new Schema({
     author: {
         type: String,
         required: true
@@ -20,6 +20,5 @@ const channelSchema = new Schema({
     }
 });
 
-const Channel = mongoose.model("Channel", channelSchema);
-
+const Channel = mongoose.model("Channel", ChannelSchema);
 module.exports = Channel;

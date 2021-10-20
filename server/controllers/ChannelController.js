@@ -18,7 +18,7 @@ class ChannelController {
         })
         channel.save().then(() => {
             return res.status(200).json(channel);
-        })
+        });
     }
 
     delete(req, res) {
@@ -31,8 +31,6 @@ class ChannelController {
             res.json({status: 'error'});
         })
     }
-
-    update() {}
 }
 
 module.exports = ChannelController;

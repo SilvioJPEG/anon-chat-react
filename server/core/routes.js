@@ -1,5 +1,4 @@
 const {Router} = require('express');
-const Channel = require('../models/Channel');
 const router = Router();
 
 const ChannelController = require("../controllers/ChannelController");
@@ -11,9 +10,8 @@ router.get('/channels', chController.index);
 router.post('/channels', chController.create);
 router.delete('/channels:id', chController.delete);
 
-router.get('/messages', msgController.index);
-router.get('/messages/:id', msgController.channel_msgs);
-router.get('/last/:id', msgController.last_msg);
+router.get('/messages', msgController.index); //return all messages for all chats
+router.get('/messages/:id', msgController.channel_msgs); //all messages for chat with specific id
 router.post('/messages', msgController.create);
 
 module.exports = router;

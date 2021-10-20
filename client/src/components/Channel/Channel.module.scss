@@ -1,4 +1,7 @@
 $border-vk: #EDEEF0;
+#selected{
+    background-color: var(--inputFieldColor);
+}
 
 .channel {
     display: flex;

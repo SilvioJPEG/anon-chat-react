@@ -1,19 +1,18 @@
 import styles from './Popup.module.scss'
 import axios from 'axios';
 import React from 'react';
-import {ChannelType} from "../../types"
+import { useTypedSelector } from '../../redux/reducers';
+import { useDispatch } from 'react-redux';
 
 type popupProps = {
-    PopupVisible:boolean
-    onClose: (PopupVisible:boolean) => void
-    channels: Array<ChannelType>
-    setChannels: (data: ChannelType[]) => void;
     setCurrentChannel: (data: Array<string>) => void;
 }
 
-const Popup: React.FC<popupProps> = ({PopupVisible, onClose, channels, setChannels, setCurrentChannel}) => {
-    
+const Popup: React.FC<popupProps> = ({setCurrentChannel}) => {
+    const dispatch = useDispatch();
+    const channels = useTypedSelector(state => state.channelReducer.channelList);
     const textInput = React.useRef<HTMLInputElement>(null);
+    const [fadeOut, SetFadeOut] = React.useState<boolean>(false);
 
     const addChannel = async () => {
         let channelName = ''
@@ -33,27 +32,29 @@ const Popup: React.FC<popupProps> = ({PopupVisible, onClose, channels, setChanne
         try {
             const response = await axios.post<any>('/channels', channel);
             if (response.status === 200) {
-
-                setChannels([...channels, response.data]);
+                dispatch({type:"CHANNELS:SET_CHANNELS", payload: [response.data]});
                 setCurrentChannel([response.data._id, response.data.name]);
             }
         } catch (error) {
             alert("Не удалось создать канал")
         }
-        onClose(!PopupVisible);
+        ClosePopup();
     }
-
+    const ClosePopup = () => {
+        SetFadeOut(!fadeOut);
+        setTimeout(()=>{
+            SetFadeOut(!fadeOut);
+            dispatch({type:"POPUP:SET_VISIBLE"});
+        }, 300);
+    }
     return(
     <div className={styles.overlay}>
-        <div className={styles.popup}>
-            <div className={styles.closeButton} onClick={() => onClose(!PopupVisible)}>X</div>
+        <div className={styles.popup} id={fadeOut? styles.slideDown : ''}>
+            <div className={styles.closeButton} onClick={ClosePopup}>X</div>
             <div className={styles.newChannelInfo}>
-                {/* <div className={styles.channelPhoto}>
-                    <img src='' alt="channel" />
-                </div> */}
                 <div className={styles.popupForm}>
                     <div className={styles.channelNameField}>
-                        <input ref={textInput} type="text" placeholder="Название канала" required={true}/> 
+                        <input ref={textInput} type="text" placeholder="Channel name" required={true}/> 
                     </div>
                     <button onClick={addChannel}>Создать</button>
                 </div>

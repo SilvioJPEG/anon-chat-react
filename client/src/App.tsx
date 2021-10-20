@@ -4,16 +4,26 @@ import {
     Switch,
     Route
   } from "react-router-dom";
-import _ from "./themes"
 import Chat from "./pages/Chat";
 import Info from "./pages/Info"
-import Footer from "./components/Footer";
+
 
 function App() {
-    const [FooterVisible, SetFooterVisible] = React.useState<boolean>(false); //makes footer visible by button click
+    function setTheme(themeName: string): void {
+        localStorage.setItem("theme", themeName);
+        document.body.className = themeName;
+    }
 
     React.useEffect(() => {
-        _.keepTheme();
+    if (localStorage.getItem('theme')) {
+        if (localStorage.getItem('theme') === 'theme-dark') {
+            setTheme('theme-dark');
+        } else if (localStorage.getItem('theme') === 'theme-light') {
+            setTheme('theme-light')
+        }
+        } else {
+        setTheme('theme-light')
+        }
     })
     
     return (
@@ -24,15 +34,9 @@ function App() {
                 <Info />   
             </Route>
             <Route path="/">
-                <Chat />    
+                <Chat/>    
             </Route>
         </Switch>
-        <div className="footerButton" onClick={()=>SetFooterVisible(!FooterVisible)}> 
-            ^
-        </div>
-        <Footer 
-            isFooterVisible ={FooterVisible}
-        />
     </div>
     </Router>
   );

@@ -10,9 +10,10 @@
     .reply {
         display: none;
         position: absolute;
-        right: 70px;
+        right: -120px;
     }
     .info{
+        position: relative;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -22,12 +23,79 @@
         }
         .dateInfo {
             right: 0;
-            margin-left: 20px;
             font-weight: 300;
         }
     }
-    p {
+    .textBody {
         font-weight: 400;
         margin: 0;
+        .emoteFragment {
+            position: relative;
+            &::before {
+                position:absolute;
+                content: attr(data-text);
+                width:auto;
+                padding: 5px 10px;
+                border-radius:10px;
+                background: var(--textColor);
+                color: var(--wrapperColor);
+                text-align:center;
+                opacity: 0;
+                top: 0;
+                right: 0;
+                transform:translateX(20%) translateY(-170%);
+                transition: opacity 0.2s ease-in-out;
+            }
+            &::after {
+                border:5px solid var(--textColor);
+                border-color: var(--textColor) transparent transparent transparent;
+                content: "";
+                position:absolute;
+                top: 0;
+                right: 0;
+                opacity: 0;
+                transform: translateX(-120%) translateY(-190%);
+                transition: opacity 0.2s ease-in-out;
+            }
+            &:hover::before, &:hover::after{
+                display: block;
+                opacity: 1;
+                transition: opacity 0.2s ease-in-out;
+            }
+            img {
+                height: 27px;
+            }
+        }
+    }
+    .imageHolder {
+        img {
+            height: 200px;
+            width: auto;
+        }
+    }
+}
+.replyContainer {
+    position: relative;
+    margin: 2px 20px;
+    .replyToInfo {
+        margin-left: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    &::before {
+        position: absolute;
+        background-color: var(--accentColor);
+        content: '';
+        border-radius: 1px;
+        width: 2px;
+        height: 100%;
+        opacity: 0.5;
+    }
+    &:hover {
+        cursor: pointer;
+        &::before {
+            opacity: 1;
+        }
     }
 }
