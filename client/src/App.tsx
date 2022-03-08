@@ -1,43 +1,46 @@
 import React from "react";
-import { 
-    BrowserRouter as Router,
-    Switch,
-    Route
-  } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Chat from "./pages/Chat";
-import Info from "./pages/Info"
-
+import Info from "./pages/Info";
 
 function App() {
-    function setTheme(themeName: string): void {
-        localStorage.setItem("theme", themeName);
-        document.body.className = themeName;
+  const dispatch = useDispatch();
+  function setTheme(themeName: string): void {
+    localStorage.setItem("theme", themeName);
+    document.body.className = themeName;
+  }
+  const setUsername = () => {
+    dispatch({
+      type: "USERS:SET_USERNAME",
+      payload: localStorage.getItem("name"),
+    });
+  };
+  React.useEffect(() => {
+    if (localStorage.getItem("theme")) {
+      if (localStorage.getItem("theme") === "theme-dark") {
+        setTheme("theme-dark");
+      } else if (localStorage.getItem("theme") === "theme-light") {
+        setTheme("theme-light");
+      }
+    } else {
+      setTheme("theme-light");
     }
+    setUsername();
+  });
 
-    React.useEffect(() => {
-    if (localStorage.getItem('theme')) {
-        if (localStorage.getItem('theme') === 'theme-dark') {
-            setTheme('theme-dark');
-        } else if (localStorage.getItem('theme') === 'theme-light') {
-            setTheme('theme-light')
-        }
-        } else {
-        setTheme('theme-light')
-        }
-    })
-    
-    return (
+  return (
     <Router>
-    <div className="chatApp">
+      <div className="chatApp">
         <Switch>
-            <Route path="/about">
-                <Info />   
-            </Route>
-            <Route path="/">
-                <Chat/>    
-            </Route>
+          <Route path="/info">
+            <Info />
+          </Route>
+          <Route path="/">
+            <Chat />
+          </Route>
         </Switch>
-    </div>
+      </div>
     </Router>
   );
 }

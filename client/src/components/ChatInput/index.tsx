@@ -128,7 +128,7 @@ const ChatInput: React.FC<chatInputProps> = ({messages, currentChannelId, socket
                     <div>
                         <SmileOutlined id={styles.emoteMenuBtn} className={EmotesVisible ? styles.emoteMenuBtnActive : ''}title="Emotes" onClick={setEmotePickerVisible}/>
                     </div>
-                    <div id={styles.inputField} contentEditable={true} suppressContentEditableWarning={true} onKeyUp={handleSendMessage} ref={inputFieldRef}></div>
+                    <div id={styles.inputField} contentEditable={true} suppressContentEditableWarning={true} onKeyDown={handleSendMessage} ref={inputFieldRef}></div>
                     <SendOutlined className={styles.msgSendButton} onClick={SendMessage} title="send message"/>
                 </div>
                 <input id={styles.file} type="file" name="attachments" ref={inputFileRef} onChange={fileSelectedHandler}/>

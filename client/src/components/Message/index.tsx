@@ -1,5 +1,5 @@
 import { MessageType } from '../../types';
-import styles from './Message.module.scss'
+import styles from './Message.module.scss';
 import emoteListJson from "../../data/emotesData/CustomEmotes.json";
 import {emoteObject, emoteObjectExt, textFragmentObject, emoteFragmentObject} from "../../types";
 import replyIcon from "../../assets/reply-icon.svg";

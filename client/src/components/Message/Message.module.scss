@@ -18,6 +18,7 @@
         flex-direction: row;
         justify-content: space-between;
         width: 200px;
+        margin-bottom: 10px;
         .messagerName {
             font-weight: 900;
         }
@@ -29,6 +30,7 @@
     .textBody {
         font-weight: 400;
         margin: 0;
+        padding: 6px 30px 7px 0;
         .emoteFragment {
             position: relative;
             &::before {
